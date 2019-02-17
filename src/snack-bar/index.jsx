@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import classes from "./SnackBar.module.scss";
+import { GlobalContext } from "../context";
 
-export const SnackBar = ({ message, setMessage }) => {
+export const SnackBar = _ => {
+  const {
+    state: {
+      snackBar: { remove, message }
+    },
+    dispatch
+  } = useContext(GlobalContext);
   if (!message) return null;
-  const [remove, setRemove] = useState(false);
-  remove
-    ? setTimeout(_ => setMessage("") || setRemove(false), 600)
-    : setTimeout(_ => setRemove(true), 5000);
+  setTimeout(
+    _ => dispatch.snackBar.setRemove({ remove: !remove }),
+    remove ? 600 : 5000
+  );
   return (
     <div>
       <div className={`${classes.wrapper} ${remove && classes.remove}`}>

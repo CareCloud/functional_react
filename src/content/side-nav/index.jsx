@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import classes from "./SideNav.module.scss";
-import { ProfileContext } from "../../context";
+import { GlobalContext } from "../../context";
 
-export const SideNav = ({ setActiveContent }) => {
-  const linkClick = name => _ => {
-    window.history.pushState("", name, `${name.toLowerCase()}`);
-    setActiveContent(name.toLowerCase());
-  };
-  const { profile } = useContext(ProfileContext);
+export const SideNav = _ => {
+  const {
+    state: { profile },
+    dispatch
+  } = useContext(GlobalContext);
+  const onClick = name => _ =>
+    dispatch.route.setActive({ active: name.toLowerCase() });
   return (
     <div>
       <div className={classes.profileCard}>
@@ -24,7 +25,7 @@ export const SideNav = ({ setActiveContent }) => {
         { icon: "fas fa-sliders-h", name: "Settings" }
       ].map(({ icon, name }) => (
         <div key={name} className={classes.route}>
-          <div className={classes.routeInfo} onClick={linkClick(name)}>
+          <div className={classes.routeInfo} onClick={onClick(name)}>
             <i className={icon} />
             <div>{name}</div>
           </div>

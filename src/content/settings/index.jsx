@@ -1,12 +1,16 @@
 import React, { useContext } from "react";
 import classes from "./Settings.module.scss";
-import { ProfileContext } from "../../context";
+import { GlobalContext } from "../../context";
 
 export const Settings = _ => {
   const {
-    profile: { lastName, firstName },
-    setProfile
-  } = useContext(ProfileContext);
+    state: {
+      profile: { lastName, firstName }
+    },
+    dispatch: {
+      profile: { setProfile }
+    }
+  } = useContext(GlobalContext);
   return (
     <div className={classes.root}>
       <div className={classes.header}>Settings</div>
